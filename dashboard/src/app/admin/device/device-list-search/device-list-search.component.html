@@ -1,0 +1,77 @@
+<div class="container mt-1 mb-4">
+  <div class="card p-4 shadow">
+    <h2 class="mb-3 text-center">Tìm kiếm thiết bị</h2>
+
+    <div class="row g-2">
+      <div class="col-md-6">
+        <label for="fullname" class="form-label">Name</label>
+        <input type="text" [(ngModel)]="name" class="form-control" id="fullname">
+      </div>
+
+      <div class="col-md-6">
+        <label for="address" class="form-label">ID</label>
+        <input type="text" [(ngModel)]="id" class="form-control" id="address">
+      </div>
+
+      <div class="col-md-6">
+        <label for="role" class="form-label">Type</label>
+        <select class="form-select" [(ngModel)]="type" id="role">
+          <option value=" ">-- Chọn Type --</option>
+          <option *ngFor="let category of categorys" value="{{category.name}}">{{category.name}}</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label for="username" class="form-label">description</label>
+        <input type="text" [(ngModel)]="description" class="form-control" id="username">
+      </div>
+
+      <div class="col-md-12 text-center mt-3">
+        <button class="btn btn-primary btn-search" (click)="searchDevices()">
+          <i class="bi bi-search"></i> Tìm kiếm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Account đang dùng</th>
+    <th>Thể loại</th>
+    <th>Description</th>
+    <th>Note</th>
+    <th>Hành động</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let device of devices | paginate: { itemsPerPage: 10, currentPage: page }">
+    <td>{{ device.id }}</td>
+    <td>{{ device.name }}</td>
+    <td>{{ device.accountAssignName }}</td>
+    <td>{{ device.type }}</td>
+    <td>{{ device.description }}</td>
+    <td>{{ device.note }}</td>
+    <td>
+      <button class="btn btn-primary btn-sm" (click)="openAssignModal(device)">
+        Assign
+      </button>
+      <button class="btn btn-danger btn-sm" (click)="deleteDevice(device)">Xóa</button>
+      <a routerLink="/admin/dashboard/device/edit/{{device.id}}" class="btn btn-primary btn-sm">Sửa</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Phân trang -->
+<div *ngIf="totalPages > 1" class="pagination-container">
+  <button (click)="changePage(page - 1)" [disabled]="page === 0" class="btn btn-outline-primary">Trang trước</button>
+  <span>Trang {{ page + 1 }} / {{ totalPages }}</span>
+  <button (click)="changePage(page + 1)" [disabled]="page >= totalPages - 1" class="btn btn-outline-primary">Trang sau
+  </button>
+</div>
+

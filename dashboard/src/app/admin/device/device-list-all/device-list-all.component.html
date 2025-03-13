@@ -1,0 +1,47 @@
+
+<div class="search-container">
+  <label for="fullname">Name</label>
+  <input type="text" [(ngModel)]="name" placeholder="Name ..." id="fullname">
+
+  <label for="id">ID</label>
+  <input type="text" [(ngModel)]="id" placeholder="ID ..." id="id">
+
+  <label for="address">Account đang dùng</label>
+  <input type="text" [(ngModel)]="accountAssignName" placeholder="Account đang dùng ..." id="address">
+
+  <label for="role">Thể loại</label>
+  <input type="text" [(ngModel)]="type" placeholder="Thể loại ..." id="role">
+
+  <label for="username">Description</label>
+  <input type="text" [(ngModel)]="description" placeholder="Description ..." id="username">
+
+  <button (click)="searchDevices()">Tìm kiếm</button>
+</div>
+
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Account đang dùng</th>
+    <th>Thể loại</th>
+    <th>Description</th>
+    <th>Note</th>
+    <th>Hành động</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let device of devices">
+    <td>{{ device.id }}</td>
+    <td>{{ device.name }}</td>
+    <td>{{ device.accountAssignName }}</td>
+    <td>{{ device.type }}</td>
+    <td>{{ device.description }}</td>
+    <td>{{ device.note }}</td>
+    <td>
+      <a routerLink="/admin/dashboard/device/assign/{{device.id}}" class="btn btn-primary btn-sm">Assign</a>
+    </td>
+  </tr>
+  </tbody>
+</table>

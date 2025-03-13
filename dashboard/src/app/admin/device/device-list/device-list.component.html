@@ -1,0 +1,24 @@
+<input type="text" class="form-control mb-3" [(ngModel)]="searchTerm" placeholder="Nhập tên thiết bị..." />
+<button class="btn btn-primary mb-3" (click)="onSearch()">Tìm kiếm</button>
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Tên thiết bị</th>
+    <th>Loại</th>
+    <th>Hành động</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let device of devices">
+    <td>{{ device.id }}</td>
+    <td>{{ device.name }}</td>
+    <td>{{ device.type }}</td>
+    <td>
+      <a routerLink="/admin/dashboard/device/edit/{{device.id}}" class="btn btn-primary btn-sm">Sửa</a>
+      <button class="btn btn-danger btn-sm" (click)="deleteDevice(device)">Xóa</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

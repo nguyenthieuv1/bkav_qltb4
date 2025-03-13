@@ -1,0 +1,26 @@
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Account đang dùng</th>
+    <th>Thể loại</th>
+    <th>Description</th>
+    <th>Note</th>
+    <th>Hành động</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let device of devices">
+    <td>{{ device.id }}</td>
+    <td>{{ device.name }}</td>
+    <td>{{ device.accountAssignName }}</td>
+    <td>{{ device.type }}</td>
+    <td>{{ device.description }}</td>
+    <td>{{ device.note }}</td>
+    <td>
+      <button  (click)="confirmReturn(device)" class="btn btn-primary btn-sm">Confirm</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

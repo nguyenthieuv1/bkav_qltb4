@@ -1,0 +1,17 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4" style="width: 400px;">
+    <h3 class="text-center">Login</h3>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label>Username:</label>
+        <input type="text" class="form-control" formControlName="username" required>
+      </div>
+      <div class="mb-3">
+        <label>Password:</label>
+        <input type="password" class="form-control" formControlName="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
+      <p class="text-danger mt-2" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </form>
+  </div>
+</div>

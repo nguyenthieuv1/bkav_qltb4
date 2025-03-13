@@ -1,0 +1,47 @@
+
+<div class="search-container">
+  <label for="fullname">Fullname</label>
+  <input type="text" [(ngModel)]="searchFullname" placeholder="Fullname ..." id="fullname">
+
+  <label for="id">ID</label>
+  <input type="text" [(ngModel)]="searchId" placeholder="ID ..." id="id">
+
+  <label for="address">Address</label>
+  <input type="text" [(ngModel)]="searchAddress" placeholder="Address ..." id="address">
+
+  <label for="role">Role</label>
+  <input type="text" [(ngModel)]="searchRole" placeholder="Role ..." id="role">
+
+  <label for="username">Username</label>
+  <input type="text" [(ngModel)]="searchUsername" placeholder="Username ..." id="username">
+
+  <button (click)="searchAccounts()">Tìm kiếm</button>
+</div>
+
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Fullname</th>
+    <th>Address</th>
+    <th>Phone</th>
+    <th>Role</th>
+    <th>Username</th>
+    <th>Hành động</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let account of accounts">
+    <td>{{ account.id }}</td>
+    <td>{{ account.fullName }}</td>
+    <td>{{ account.address }}</td>
+    <td>{{ account.phone }}</td>
+    <td>{{ account.role }}</td>
+    <td>{{ account.username }}</td>
+    <td>
+      <button (click)="assignDeviceToUser(account)" class="btn btn-primary btn-sm">Assign</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,74 @@
+
+<div class="container mt-1 mb-4">
+  <div class="card p-4 shadow">
+    <h2 class="mb-3 text-center">Tìm kiếm tài khoản</h2>
+
+    <div class="row g-2">
+      <div class="col-md-6">
+        <label for="fullname" class="form-label">Fullname</label>
+        <input type="text" [(ngModel)]="searchFullname" class="form-control" placeholder="Fullname ..." id="fullname">
+      </div>
+
+      <div class="col-md-6">
+        <label for="address" class="form-label">Address</label>
+        <input type="text" [(ngModel)]="searchAddress" class="form-control" placeholder="Address ..." id="address">
+      </div>
+
+      <div class="col-md-6">
+        <label for="role" class="form-label">Role</label>
+        <select class="form-select" [(ngModel)]="searchRole" id="role">
+          <option value="">-- Chọn Role --</option>
+          <option value="USER">User</option>
+          <option value="ADMIN">Admin</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" [(ngModel)]="searchUsername" class="form-control" placeholder="Username ..." id="username">
+      </div>
+
+      <div class="col-md-12 text-center mt-3">
+        <button class="btn btn-primary btn-search" (click)="searchAccounts()">
+          <i class="bi bi-search"></i> Tìm kiếm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Fullname</th>
+    <th>Address</th>
+    <th>Phone</th>
+    <th>Role</th>
+    <th>Username</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let account of accounts | paginate: { itemsPerPage: 10, currentPage: page }">
+    <td>{{ account.id }}</td>
+    <td>{{ account.fullName }}</td>
+    <td>{{ account.address }}</td>
+    <td>{{ account.phone }}</td>
+    <td>{{ account.role }}</td>
+    <td>{{ account.username }}</td>
+    <td>
+      <a routerLink="/admin/dashboard/user/edit/{{account.id}}" class="btn btn-primary btn-sm">Sửa</a>
+      <button class="btn btn-danger btn-sm" (click)="deleteAccount(account)">Xóa</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Phân trang -->
+<div *ngIf="totalPages > 1" class="pagination-container">
+  <button (click)="changePage(page - 1)" [disabled]="page === 0" class="btn btn-outline-primary">Trang trước</button>
+  <span>Trang {{ page + 1 }} / {{ totalPages }}</span>
+  <button (click)="changePage(page + 1)" [disabled]="page >= totalPages - 1" class="btn btn-outline-primary">Trang sau</button>
+</div>
