@@ -12,6 +12,7 @@ public class Account {
     private String phone;
     private String address;
     private String role;
+    private Boolean hasDevice;
 
     public Account() {
     }
@@ -33,6 +34,14 @@ public class Account {
         this.id = id;
     }
 
+    public Boolean getHasDevice() {
+        return hasDevice;
+    }
+
+    public void setHasDevice(Boolean hasDevice) {
+        this.hasDevice = hasDevice;
+    }
+
     public AccountEntity toEntity(){
         AccountEntity account = new AccountEntity();
         account.setUsername(username);
@@ -48,6 +57,7 @@ public class Account {
     public Long getId() {
         return id;
     }
+
 
     @Override
     public String toString() {

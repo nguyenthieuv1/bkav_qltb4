@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -85,6 +86,13 @@ public class DeviceDaoImpl implements DeviceDao{
         DeviceEntity deviceEntity = device.toEntity();
         CategoryEntity category = getCategoryEntityById(device.getCategoryId());
         deviceEntity.setCategory(category);
+
+        //        set account admin to device
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        AccountEntity accountEntity = getAccountEntityByUsername(username);
+        deviceEntity.setAccount(accountEntity);
+
+
         deviceRepository.save(deviceEntity);
     }
 
@@ -104,9 +112,10 @@ public class DeviceDaoImpl implements DeviceDao{
     @Override
     public void delete(Device device) {
         Optional<DeviceEntity> deviceEntity = deviceRepository.findById(device.getId());
+        String adminUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         if(deviceEntity.isPresent()) {
             AccountEntity accountEntity = deviceEntity.get().getAccount();
-            if (!accountEntity.getUsername().equals("admin")) {
+            if (!accountEntity.getUsername().equals(adminUsername)) {
                 throw new RuntimeException("thiết bị đang có người sử dụng");
             }
         }
@@ -125,6 +134,14 @@ public class DeviceDaoImpl implements DeviceDao{
         deviceEntityToBorrow.setAccount(accountEntityBorrow);
         deviceEntityToBorrow.setStatus("0");
         deviceRepository.save(deviceEntityToBorrow);
+    }
+
+    public AccountEntity getAccountEntityByUsername(String username) {
+        AccountEntity accountEntity = accountRepository.findByUsername(username);
+        if (accountEntity != null) {
+            return accountEntity;
+        }
+        throw new RuntimeException("Account not found!!!!");
     }
 
     public DeviceEntity getDeviceEntity(long id) {

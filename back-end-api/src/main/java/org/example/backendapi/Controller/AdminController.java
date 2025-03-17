@@ -113,11 +113,10 @@ public class AdminController {
         return ResponseEntity.ok().build();
    }
 
-   @PostMapping("/devices-borrow")
+   @PostMapping("/devices-assign")
     public ResponseEntity<?> assignDevice(
            @RequestBody DeviceBorrow deviceBorrow
            ) {
-       System.out.println("dcsscscsf "+deviceBorrow);
         deviceService.addAccountBorrowDevice(deviceBorrow);
 
         return ResponseEntity.ok().build();

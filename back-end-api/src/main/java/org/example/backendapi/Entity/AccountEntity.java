@@ -5,6 +5,7 @@ import lombok.Data;
 import org.example.backendapi.Dto.Account;
 import org.example.backendapi.constants.NameTableConstant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public class AccountEntity {
     private String phone;
 
     @OneToMany(mappedBy = "account")
-    private List<DeviceEntity> deviceEntities;
+    private List<DeviceEntity> deviceEntities = new ArrayList<>();
 
     public Account toDto(){
         Account account = new Account();
@@ -34,6 +35,20 @@ public class AccountEntity {
         account.setFullName(fullName);
         account.setAddress(address);
         account.setPhone(phone);
+        return account;
+    }
+    public Account toDtoHasCheckListDevice(){
+        Account account = new Account();
+        account.setId(id);
+        account.setUsername(username);
+        account.setPassword(password);
+        account.setRole(role);
+        account.setFullName(fullName);
+        account.setAddress(address);
+        account.setPhone(phone);
+        if (this.deviceEntities != null && this.deviceEntities.size() > 0) {
+            account.setHasDevice(true);
+        }
         return account;
     }
 

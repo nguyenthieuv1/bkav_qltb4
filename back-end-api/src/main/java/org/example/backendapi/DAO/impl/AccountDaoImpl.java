@@ -183,7 +183,7 @@ public class AccountDaoImpl implements AccountDao {
         Page<AccountEntity> accountEntities =
                 accountRepository.searchAccounts(pageable, account.getUsername(),
                         account.getRole(),account.getFullName(), account.getAddress(),account.getPhone());
-        return accountEntities.map(AccountEntity::toDto);
+        return accountEntities.map(AccountEntity::toDtoHasCheckListDevice);
     }
 
 
