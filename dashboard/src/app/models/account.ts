@@ -6,4 +6,5 @@ export interface Account {
   address?: string;
   role?: string;
   fullName?: string;
+  hasDevice?: boolean;
 }

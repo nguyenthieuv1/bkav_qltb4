@@ -1,7 +1,7 @@
 
 <div class="container mt-1 mb-4">
   <div class="card p-4 shadow">
-    <h2 class="mb-3 text-center">Tìm kiếm tài khoản</h2>
+    <h2 class="mb-3 text-center">Search account</h2>
 
     <div class="row g-2">
       <div class="col-md-6">
@@ -17,7 +17,7 @@
       <div class="col-md-6">
         <label for="role" class="form-label">Role</label>
         <select class="form-select" [(ngModel)]="searchRole" id="role">
-          <option value="">-- Chọn Role --</option>
+          <option value="">-- Select Role --</option>
           <option value="USER">User</option>
           <option value="ADMIN">Admin</option>
         </select>
@@ -30,7 +30,7 @@
 
       <div class="col-md-12 text-center mt-3">
         <button class="btn btn-primary btn-search" (click)="searchAccounts()">
-          <i class="bi bi-search"></i> Tìm kiếm
+          <i class="bi bi-search"></i> Search
         </button>
       </div>
     </div>
@@ -39,7 +39,7 @@
 
 
 
-<table class="table table-bordered">
+<table class="table table-bordered text-center">
   <thead>
   <tr>
     <th>ID</th>
@@ -48,6 +48,7 @@
     <th>Phone</th>
     <th>Role</th>
     <th>Username</th>
+    <th>Function</th>
   </tr>
   </thead>
   <tbody>
@@ -59,8 +60,8 @@
     <td>{{ account.role }}</td>
     <td>{{ account.username }}</td>
     <td>
-      <a routerLink="/admin/dashboard/user/edit/{{account.id}}" class="btn btn-primary btn-sm">Sửa</a>
-      <button class="btn btn-danger btn-sm" (click)="deleteAccount(account)">Xóa</button>
+      <a routerLink="/admin/dashboard/user/edit/{{account.id}}" class="btn btn-primary btn-sm m-sm-1">Edit</a>
+      <button class="btn btn-danger btn-sm m-sm-1" (click)="deleteAccount(account)" [disabled]="account.hasDevice">Delete</button>
     </td>
   </tr>
   </tbody>
@@ -68,7 +69,7 @@
 
 <!-- Phân trang -->
 <div *ngIf="totalPages > 1" class="pagination-container">
-  <button (click)="changePage(page - 1)" [disabled]="page === 0" class="btn btn-outline-primary">Trang trước</button>
-  <span>Trang {{ page + 1 }} / {{ totalPages }}</span>
-  <button (click)="changePage(page + 1)" [disabled]="page >= totalPages - 1" class="btn btn-outline-primary">Trang sau</button>
+  <button (click)="changePage(page - 1)" [disabled]="page === 0" class="btn btn-outline-primary">Previous page</button>
+  <span>Page {{ page + 1 }} / {{ totalPages }}</span>
+  <button (click)="changePage(page + 1)" [disabled]="page >= totalPages - 1" class="btn btn-outline-primary">Next page</button>
 </div>

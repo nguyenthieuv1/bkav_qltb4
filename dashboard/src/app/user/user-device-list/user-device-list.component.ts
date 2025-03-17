@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Device} from '../../models/device';
 import {UserService} from '../../services/user.service';
+import {ReloadServiceService} from '../../services/reload-service.service';
 
 @Component({
   selector: 'app-user-device-list',
@@ -11,11 +12,17 @@ export class UserDeviceListComponent implements OnInit {
 
   devices?: Device[];
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private reloadService: ReloadServiceService,
+              ) {
   }
 
   ngOnInit(): void {
     this.loadDevices();
+    this.reloadService.reload$.subscribe(() => {
+      this.loadDevices(); // Khi nhận được tín hiệu reload thì gọi lại API
+    });
   }
 
   loadDevices(): void {

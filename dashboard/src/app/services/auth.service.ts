@@ -25,7 +25,7 @@ export class AuthService {
         console.error('Navigation error:', err);
       });
     } else {
-      this.router.navigate(['/user/home']).then(success => {
+      this.router.navigate(['/user/home/my-devices']).then(success => {
         console.log('Navigation success:', success);
       }).catch(err => {
         console.error('Navigation error:', err);

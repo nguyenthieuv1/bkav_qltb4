@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DeviceService} from '../../../services/device.service';
 import {Device} from '../../../models/device';
 import {DeviceReturnConfirm} from '../../../models/device-return-confirm';
+import {ReloadServiceService} from '../../../services/reload-service.service';
 
 @Component({
   selector: 'app-confirm-return',
@@ -12,11 +13,17 @@ export class ConfirmReturnComponent implements OnInit {
 
   devices?: Device[];
 
-  constructor(private deviceService: DeviceService) {
+  constructor(
+    private deviceService: DeviceService,
+    private reloadService: ReloadServiceService,
+    ) {
   }
 
   ngOnInit(): void {
     this.loadDevice();
+    this.reloadService.reload$.subscribe(() => {
+      this.loadDevice(); // Khi nhận được tín hiệu reload thì gọi lại API
+    });
   }
 
   loadDevice() {

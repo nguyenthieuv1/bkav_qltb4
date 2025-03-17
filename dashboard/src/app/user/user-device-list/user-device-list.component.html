@@ -19,15 +19,15 @@
 <!--</div>-->
 
 
-<table class="table table-bordered">
+<table class="table table-bordered text-center">
   <thead>
   <tr>
     <th>ID</th>
     <th>Name</th>
     <th>Description</th>
+    <th>Status</th>
     <th>Note</th>
-    <th>Trạng thái</th>
-    <th>Hành động</th>
+    <th>Function</th>
   </tr>
   </thead>
   <tbody>
@@ -35,13 +35,13 @@
     <td>{{ device.id }}</td>
     <td>{{ device.name }}</td>
     <td>{{ device.description }}</td>
-    <td>{{ device.note }}</td>
     <td>{{ device.status === '2' ? 'Đang trả' : 'đang dùng' }}</td>
+    <td>{{ device.note }}</td>
     <td>
       <button (click)="returnDevice(device.id)"
               class="btn btn-primary btn-sm"
               [disabled]="device.status == '2'">
-        Trả device
+        Return device
       </button>
 
     </td>

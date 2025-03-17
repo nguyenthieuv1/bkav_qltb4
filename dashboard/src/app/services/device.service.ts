@@ -69,7 +69,7 @@ export class DeviceService {
     let deviceBorrow = {deviceId: deviceID, accountId: accountID};
     console.log('Device borrow:', deviceBorrow);
     const headers = this.getLoginHeader();
-    return this.http.post<DeviceBorrow>(this.adminApiUrl + '/devices-borrow', deviceBorrow, {headers});
+    return this.http.post<DeviceBorrow>(this.adminApiUrl + '/devices-assign', deviceBorrow, {headers});
   }
 
   getDeviceReturning(): Observable<Device[]> {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
+import {ReloadServiceService} from '../../services/reload-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +9,10 @@ import {AuthService} from '../../services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private reloadService: ReloadServiceService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -17,7 +21,7 @@ export class NavbarComponent implements OnInit {
     this.authService.logout();
   }
   reload(){
-    window.location.reload();
+    this.reloadService.triggerReload(); // Gửi tín hiệu reload
   }
 
 }

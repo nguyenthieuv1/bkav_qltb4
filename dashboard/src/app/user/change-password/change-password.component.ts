@@ -32,10 +32,6 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.passwordForm.invalid) {
-      alert('Passwords do not match');
-      return;
-    }
     // console.log('Mật khẩu hợp lệ!', this.passwordForm.value);
     this.userService.changePassword(this.passwordForm.value).subscribe(
       (res: PasswordChange) => {
@@ -56,5 +52,10 @@ export class ChangePasswordComponent implements OnInit {
 
       return password === confirmPassword ? null : {passwordMismatch: true};
     };
+  }
+
+  // Kiểm tra xem có lỗi không để hiển thị thông báo
+  hasError(controlName: string, errorName: string): boolean {
+    return this.passwordForm.get(controlName)?.hasError(errorName) ?? false;
   }
 }

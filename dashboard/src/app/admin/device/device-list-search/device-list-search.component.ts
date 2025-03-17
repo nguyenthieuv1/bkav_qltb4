@@ -8,6 +8,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {AssignUserDialogComponent} from '../assign-user-dialog/assign-user-dialog.component';
 import {Account} from '../../../models/account';
 import {ActivatedRoute, Router} from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
+import {ReloadServiceService} from '../../../services/reload-service.service';
 
 @Component({
   selector: 'app-device-list-search',
@@ -33,14 +35,19 @@ export class DeviceListSearchComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
+    private cdRef: ChangeDetectorRef,
+    private reloadService: ReloadServiceService,
   ) {
   }
 
   ngOnInit(): void {
     this.loadDevices();
+    this.reloadService.reload$.subscribe(() => {
+      this.loadDevices(); // Khi nhận được tín hiệu reload thì gọi lại API
+    });
   }
 
-  openAssignModal(device: any) {
+  openAssignModal(device: Device) {
     const dialogRef = this.dialog.open(AssignUserDialogComponent, {
       width: '600px',
       data: {device}
@@ -48,15 +55,15 @@ export class DeviceListSearchComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.assignDeviceToUser(device.id, result);
+        this.assignDeviceToUser(device, result);
       }
     });
   }
 
-  assignDeviceToUser(idDevice: number, account: Account) {
-    const confirmDelete = window.confirm(`Bạn có chắc chắn muốn gán thiết bị có id là ${idDevice} cho "${account.username}" không?`);
-    if (confirmDelete){
-      this.deviceService.assignDeviceToAccount(idDevice, account.id).subscribe(
+  assignDeviceToUser(device: Device, account: Account) {
+    const confirmDelete = window.confirm(`Bạn có chắc chắn muốn gán thiết bị "${device.name}" có id là "${device.id}" cho "${account.username}" không?`);
+    if (confirmDelete) {
+      this.deviceService.assignDeviceToAccount(device.id, account.id).subscribe(
         (response) => {
           alert('Thành công!');
           window.location.reload();
@@ -72,6 +79,9 @@ export class DeviceListSearchComponent implements OnInit {
     if (newPage >= 0 && newPage < this.totalPages) {
       this.page = newPage;
       this.loadDevices();
+      console.log('Current Page:', this.page);
+      console.log('Total Pages:', this.totalPages);
+
     }
   }
 
@@ -81,16 +91,22 @@ export class DeviceListSearchComponent implements OnInit {
       (response: any) => {
         this.devices = response.content;
         this.totalPages = response.totalPages;
-        console.log(response);
+        console.log('Devices:', this.devices);
+        this.cdRef.detectChanges(); // Cập nhật UI
       },
       (err: Error) => {
         console.log(err);
       }
     );
+
+    this.loadCategory();
+  }
+
+  loadCategory() {
     this.categoryService.getAll().subscribe(
       (response: Category[]) => {
         this.categorys = response;
-        console.log('response: ', response);
+        // console.log('response: ', response);
       },
       (err: HttpErrorResponse) => {
         console.log('có lỗi: ', err);

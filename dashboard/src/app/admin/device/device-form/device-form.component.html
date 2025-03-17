@@ -1,45 +1,45 @@
 <div class="device-form-container">
-  <h2>{{ deviceId ? 'Chỉnh sửa thiết bị' : 'Thêm mới thiết bị' }}</h2>
+  <h2>{{ deviceId ? 'Edit device' : 'Add new device' }}</h2>
 
   <form [formGroup]="deviceForm" (ngSubmit)="onSubmit()">
     <!-- Tên thiết bị -->
     <mat-form-field appearance="outline">
-      <mat-label>Tên thiết bị</mat-label>
+      <mat-label>Device Name</mat-label>
       <input matInput formControlName="name" required>
       <mat-error *ngIf="deviceForm.get('name')?.hasError('required')">
-        Tên thiết bị không được để trống.
+        Device name cannot be empty.
       </mat-error>
       <mat-error *ngIf="deviceForm.get('name')?.hasError('pattern')">
-        Tên thiết bị không được chứa dấu cách!
+        Device name cannot contain spaces!
       </mat-error>
     </mat-form-field>
 
     <!-- Loại thiết bị -->
     <mat-form-field appearance="outline">
-      <mat-label>Loại thiết bị</mat-label>
+      <mat-label>Device Type</mat-label>
       <mat-select formControlName="categoryId" required>
         <mat-option *ngFor="let category of categorys" [value]="category.id">
           {{ category.name }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="deviceForm.get('categoryId')?.hasError('required')">
-        Vui lòng chọn loại thiết bị.
+        Please select device type.
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Ghi chú</mat-label>
-      <textarea matInput formControlName="note"></textarea>
+      <mat-label>Describe</mat-label>
+      <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Mô tả</mat-label>
-      <textarea matInput formControlName="description"></textarea>
+      <mat-label>Note</mat-label>
+      <textarea matInput formControlName="note"></textarea>
     </mat-form-field>
 
     <div class="button-group">
       <button mat-raised-button color="primary" type="submit" [disabled]="deviceForm.invalid">
-        {{ deviceId ? 'Cập nhật' : 'Thêm mới' }}
+        {{ deviceId ? 'Update' : 'Add new' }}
       </button>
 <!--      <button mat-raised-button color="warn" type="button" (click)="onCancel()">Hủy</button>-->
     </div>

@@ -1,17 +1,25 @@
 <div class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="card p-4" style="width: 400px;">
-    <h3 class="text-center">Login</h3>
+  <div class="card p-4 shadow-lg" style="width: 400px;">
+    <h3 class="text-center mb-3">Login</h3>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
-        <label>Username:</label>
-        <input type="text" class="form-control" formControlName="username" required>
+        <label for="username" class="form-label">Username:</label>
+        <input id="username" type="text" class="form-control" formControlName="username" [ngClass]="{'is-invalid': loginForm.get('username')?.invalid && loginForm.get('username')?.touched}">
+        <div *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid" class="invalid-feedback">
+          {{ getErrorMessage('username') }}
+        </div>
       </div>
+
       <div class="mb-3">
-        <label>Password:</label>
-        <input type="password" class="form-control" formControlName="password" required>
+        <label for="password" class="form-label">Password:</label>
+        <input id="password" type="password" class="form-control" formControlName="password" [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="invalid-feedback">
+          {{ getErrorMessage('password') }}
+        </div>
       </div>
+
       <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
-      <p class="text-danger mt-2" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <p class="text-danger mt-2 text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
     </form>
   </div>
 </div>

@@ -3,6 +3,7 @@ import {User} from '../../../models/user';
 import {Account} from '../../../models/account';
 import {UserService} from '../../../services/user.service';
 import {Device} from '../../../models/device';
+import {ReloadServiceService} from '../../../services/reload-service.service';
 
 @Component({
   selector: 'app-user-list',
@@ -20,11 +21,17 @@ export class UserListComponent implements OnInit {
   page = 0;
   totalPages = 0;
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private reloadService: ReloadServiceService,
+  ) {
   }
 
   ngOnInit(): void {
     this.loadUser(this.page, this.searchUsername, this.searchFullname, this.searchAddress, this.searchRole);
+    this.reloadService.reload$.subscribe(() => {
+      this.loadUser(this.page, this.searchUsername, this.searchFullname, this.searchAddress, this.searchRole); // Khi nhận được tín hiệu reload thì gọi lại API
+    });
   }
 
   loadUser(page, searchUsername, searchFullname, searchAddress, searchRole): void {
@@ -49,7 +56,7 @@ export class UserListComponent implements OnInit {
 
   deleteAccount(account: Account) {
     const confirmDelete = window.confirm(`Bạn có chắc chắn muốn xóa account "${account.username}" không?`);
-    if (confirmDelete){
+    if (confirmDelete) {
       this.userService.deleteUser(account.id).subscribe(
         (response: Device) => {
           alert('đã xóa thành công!!');

@@ -1,5 +1,5 @@
 <div class="device-form-container">
-  <h2>{{ accountId ? 'Chỉnh sửa tài khoản' : 'Thêm mới tài khoản' }}</h2>
+  <h2>{{ accountId ? 'Edit account' : 'Add new account' }}</h2>
 
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
@@ -11,25 +11,22 @@
       <mat-label>Username</mat-label>
       <input matInput formControlName="username" required>
       <mat-error *ngIf="userForm.get('username')?.hasError('required')">
-        Username không được để trống.
+        Username cannot be blank.
       </mat-error>
       <mat-error *ngIf="userForm.get('username')?.hasError('pattern')">
-        Username không được chứa dấu cách!
+        Username cannot contain spaces!
       </mat-error>
     </mat-form-field>
 
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" *ngIf="!accountId">
       <mat-label>Password</mat-label>
       <input matInput formControlName="password" required type="password">
       <mat-error *ngIf="userForm.get('password')?.hasError('required')">
-        Mật khẩu không được để trống.
+        Password cannot be blank.
       </mat-error>
       <mat-error *ngIf="userForm.get('password')?.hasError('minlength')">
-        Mật khẩu phải có ít nhất 3 ký tự.
-      </mat-error>
-      <mat-error *ngIf="userForm.get('password')?.hasError('maxLength')">
-        Mật khẩu không được vượt quá 16 ký tự.
+        Password must be at least 3 characters.
       </mat-error>
     </mat-form-field>
 
@@ -54,7 +51,7 @@
 
     <div class="button-group">
       <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
-        {{ accountId ? 'Cập nhật' : 'Thêm mới' }}
+        {{ accountId ? 'Update' : 'Add new' }}
       </button>
 <!--      <button mat-raised-button color="warn" type="button" (click)="onCancel()">Hủy</button>-->
     </div>

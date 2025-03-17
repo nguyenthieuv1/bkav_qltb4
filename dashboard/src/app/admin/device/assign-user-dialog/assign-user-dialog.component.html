@@ -1,9 +1,9 @@
-<h2 mat-dialog-title>Tìm kiếm User</h2>
+<h2 mat-dialog-title>Search user</h2>
 
 <div mat-dialog-content>
   <div class="d-flex align-items-center gap-2 mb-2">
-    <input type="text" [(ngModel)]="searchUsername" class="form-control" placeholder="Nhập tên username">
-    <button class="btn btn-primary" (click)="searchByUsername()">Tìm</button>
+    <input type="text" [(ngModel)]="searchUsername" class="form-control" placeholder="username">
+    <button class="btn btn-primary" (click)="searchByUsername()">search</button>
   </div>
 
   <table class="table table-bordered">
@@ -19,7 +19,7 @@
       <td>{{ user.id }}</td>
       <td>{{ user.username }}</td>
       <td>
-        <button class="btn btn-success btn-sm" (click)="selectUser(user)">Chọn</button>
+        <button class="btn btn-success btn-sm" (click)="selectUser(user)">select</button>
       </td>
     </tr>
     </tbody>
@@ -28,7 +28,7 @@
 
 <!-- Phân trang -->
 <div *ngIf="totalPages > 1" class="pagination-container ms-auto">
-  <button (click)="changePage(page - 1)" [disabled]="page === 0" class="btn btn-outline-primary m-2">Trang trước</button>
-  <span>Trang {{ page + 1 }} / {{ totalPages }}</span>
-  <button (click)="changePage(page + 1)" [disabled]="page >= totalPages - 1" class="btn btn-outline-primary m-2">Trang sau</button>
+  <button (click)="changePage(page - 1)" [disabled]="page === 0" class="btn btn-outline-primary m-2">Previous page</button>
+  <span>page {{ page + 1 }} / {{ totalPages }}</span>
+  <button (click)="changePage(page + 1)" [disabled]="page >= totalPages - 1" class="btn btn-outline-primary m-2">Next page</button>
 </div>
